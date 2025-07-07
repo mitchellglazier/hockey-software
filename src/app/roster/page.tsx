@@ -4,11 +4,16 @@ import { useEffect, useState } from 'react';
 import { useTeam } from '@/app/context/TeamContext';
 
 interface Player {
-  id: number;
-  fullName: string;
-  position: string;
-  jerseyNumber: string;
+  playerId: number;
+  firstName: string;
+  lastName: string;
+  age: number;
+  sweaterNumber: string; 
+  weight: string;
+  positionGroup: string;
 }
+
+
 
 export default function RosterPage() {
   const { selectedTeam } = useTeam();
@@ -21,11 +26,14 @@ export default function RosterPage() {
 
       try {
         setLoading(true);
-        const res = await fetch(`/api/roster?teamId=${selectedTeam.id}`);
+        const res = await fetch(`/api/roster?teamName=${encodeURIComponent(selectedTeam.name)}`);
         const data = await res.json();
 
         if (res.ok) {
-          setRoster(data.roster);
+          if (res.ok) {
+  setRoster(data);
+}
+
         } else {
           console.error(data.error);
         }
@@ -44,18 +52,26 @@ export default function RosterPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">{selectedTeam.name} Roster</h1>
+      <h1 className="text-2xl text-center font-bold mb-4">{selectedTeam.name} ROSTER</h1>
       <ul className="space-y-2">
-        {roster.map((player) => (
-          <li key={player.id} className="border p-4 rounded shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition">
-            <div className="flex justify-between">
-              <span className="font-medium">{player.fullName}</span>
-              <span className="text-sm text-gray-600">#{player.jerseyNumber}</span>
-            </div>
-            <div className="text-sm text-gray-700">{player.position}</div>
-          </li>
-        ))}
-      </ul>
+  {roster.map((player) => (
+    <li
+      key={player.playerId}
+      className="border p-4 rounded shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+    >
+      <div className="flex justify-between">
+        <span className="font-medium">
+          {player.firstName} {player.lastName}
+        </span>
+        <span className="text-sm text-gray-600">{player.positionGroup}</span>
+      </div>
+      <div className="text-sm text-gray-700">
+        Weight: {player.weight} • Age: {player.age}
+      </div>
+    </li>
+  ))}
+</ul>
+
     </div>
   );
 }
