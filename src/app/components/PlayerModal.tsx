@@ -22,7 +22,7 @@ export default function PlayerModal<T>({ player, onClose }: PlayerModalProps<T>)
         <h2 className="text-2xl font-bold mb-4 border-b pb-2">{(player as any).name || 'Player'}</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-          {Object.entries(player).map(([key, value]) => {
+          {Object.entries(player as any).map(([key, value]) => {
             if (key === 'capHits') return null;
             if (key === 'position') return null;
 
