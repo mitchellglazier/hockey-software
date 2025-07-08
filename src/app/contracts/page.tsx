@@ -7,6 +7,7 @@ import SortableSearchableTable from '../components/SortableSearchableTable';
 import CapHitDonut from '../components/graphs/CapHitDonut';
 import CapHitScatter from '../components/graphs/CapHitScatter';
 import CapHitTeamLineGraph from '../components/graphs/CapHitTeamLine';
+import PlayerModal from '../components/PlayerModal';
 
 interface PlayerCapInfo {
   name: string;
@@ -27,6 +28,7 @@ export default function Contracts() {
   const [selectedCapYear, setSelectedCapYear] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<any>(null)
 
   useEffect(() => {
     const fetchCapData = async () => {
@@ -273,6 +275,7 @@ export default function Contracts() {
             data={filteredPlayers}
             selectedCapYear={selectedCapYear}
             selectedTeam={selectedTeam}
+            onPlayerClick={(player) => setSelectedPlayer(player)}
           />
         </div>
       </div>
@@ -282,6 +285,7 @@ export default function Contracts() {
       data={filteredPlayers}
       selectedCapYear={selectedCapYear}
       selectedTeam={selectedTeam}
+      onPlayerClick={(player) => setSelectedPlayer(player)}
     />
   </div>
   <div className="w-full lg:w-1/2">
@@ -292,7 +296,12 @@ export default function Contracts() {
   </div>
 </div>
 
-
+{selectedPlayer && (
+  <PlayerModal
+    player={selectedPlayer}
+    onClose={() => setSelectedPlayer(null)}
+  />
+)}
     </div>
   );
 }

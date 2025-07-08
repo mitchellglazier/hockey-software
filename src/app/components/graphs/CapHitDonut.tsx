@@ -4,14 +4,15 @@ import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 interface CapHitDonutProps {
-  data: { name: string; capHit: string; status: string }[];
+  data: any[];
   selectedCapYear: string | null;
   selectedTeam: {
     colors: string[];
   };
+   onPlayerClick: (player: any) => void;
 }
 
-export default function CapHitDonut({ data, selectedCapYear, selectedTeam }: CapHitDonutProps) {
+export default function CapHitDonut({ data, selectedCapYear, selectedTeam, onPlayerClick }: CapHitDonutProps) {
   const ref = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function CapHitDonut({ data, selectedCapYear, selectedTeam }: Cap
 
     const parsedData = data
       .map((d) => ({
+        ...d,
         name: d.name,
         cap: parseInt(d.capHit.replace(/[^0-9.-]+/g, '')) || 0,
         status: d.status,
@@ -72,7 +74,11 @@ export default function CapHitDonut({ data, selectedCapYear, selectedTeam }: Cap
       })
       .on('mouseout', () => {
         tooltip.style('opacity', 0);
-      });
+      })
+      .on('click', (_, d) => {
+        tooltip.style('opacity', 0);
+  onPlayerClick(d.data);
+});
 
     g.append('text')
       .attr('text-anchor', 'middle')
@@ -87,7 +93,7 @@ export default function CapHitDonut({ data, selectedCapYear, selectedTeam }: Cap
       .style('font-size', '.75rem')
       .style('font-weight', 'semibold')
       .text('Avg Cap Hit');
-  }, [data, selectedCapYear]);
+  }, [data, selectedCapYear, onPlayerClick, selectedTeam]);
 
   return (
     <div className="relative flex flex-col items-center">

@@ -3,21 +3,16 @@
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-interface Player {
-  name: string;
-  age: number;
-  capHits: Record<string, string>;
-}
-
 interface CapHitScatterProps {
-  data: Player[];
+  data: any[];
   selectedCapYear: string | null;
   selectedTeam: {
     colors: string[];
   };
+  onPlayerClick: (player: any) => void;
 }
 
-export default function CapHitScatter({ data, selectedCapYear, selectedTeam }: CapHitScatterProps) {
+export default function CapHitScatter({ data, selectedCapYear, selectedTeam, onPlayerClick }: CapHitScatterProps) {
   const ref = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
@@ -42,9 +37,9 @@ export default function CapHitScatter({ data, selectedCapYear, selectedTeam }: C
         const projectedAge = player.age + (yearStart - currentYear);
 
         return {
-          name: player.name,
-          age: projectedAge,
-          capHit,
+           ...player,
+  age: projectedAge,
+  capHit,
         };
       })
       .filter(p => !isNaN(p.age) && p.capHit > 0);
@@ -91,7 +86,7 @@ export default function CapHitScatter({ data, selectedCapYear, selectedTeam }: C
       .on('mouseover', (_, d: any) => {
         tooltip
           .style('opacity', 1)
-          .html(`<strong>${d.name}</strong><br/>Age: ${d.age}<br/>Cap Hit: $${d.capHit.toLocaleString()}`);
+          .html(`<strong>${d.name} (${d.status})</strong><br/>Age: ${d.age}<br/>Cap Hit: $${d.capHit.toLocaleString()}`);
       })
       .on('mousemove', (event) => {
         tooltip
@@ -100,9 +95,13 @@ export default function CapHitScatter({ data, selectedCapYear, selectedTeam }: C
       })
       .on('mouseout', () => {
         tooltip.style('opacity', 0);
-      });
+      })
+      .on('click', (_, d) => {
+        tooltip.style('opacity', 0);
+  onPlayerClick(d);
+});
 
-  }, [data, selectedCapYear, selectedTeam]);
+  }, [data, selectedCapYear, selectedTeam, onPlayerClick]);
 
   return (
     <div className="mt-6">
