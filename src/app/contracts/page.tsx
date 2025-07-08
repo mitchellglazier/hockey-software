@@ -103,7 +103,7 @@ export default function Contracts() {
 
   return (
     <div className="p-4">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
         <div>
           <div className="flex gap-3 flex-wrap">
             {capYears.map((year) => (
@@ -147,7 +147,7 @@ export default function Contracts() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <InfoCard
           label="Total Cap Hit"
           value={filteredPlayers
@@ -254,7 +254,7 @@ export default function Contracts() {
 
 
       </div>
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-4">
         <div className="lg:w-3/4 overflow-x-auto">
           <SortableSearchableTable
             data={filteredPlayers}
