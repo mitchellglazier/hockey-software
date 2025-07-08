@@ -1,13 +1,13 @@
 import Sidebar from './components/SIdebar';
-import { TeamProvider } from './context/TeamContext'
-import './globals.css'
+import { TeamProvider } from './context/TeamContext';
+import './globals.css';
 
-import Navbar from '@/app/components/Navbar'
+import Navbar from '@/app/components/Navbar';
 
 export const metadata = {
   title: 'Hockey Software',
   description: 'NHL Data and Analytics',
-}
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -24,4 +24,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-
