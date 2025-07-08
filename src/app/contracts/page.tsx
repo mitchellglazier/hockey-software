@@ -215,15 +215,42 @@ export default function Contracts() {
         />
 
         <InfoCard
-          label="Expiring Contracts"
-          value={filteredPlayers.filter((p) => p.expiryYear === latestCapYear).length}
-          subtext={`in ${latestCapYear}`}
-          breakdown={[
-            { label: 'FWD', value: forwards.filter((p) => p.expiryYear === latestCapYear).length },
-            { label: 'DEF', value: defense.filter((p) => p.expiryYear === latestCapYear).length },
-            { label: 'G', value: goalies.filter((p) => p.expiryYear === latestCapYear).length },
-          ]}
-        />
+  label="Expiring Contracts"
+  value={
+    selectedCapYear
+      ? filteredPlayers.filter(
+          (p) => p.expiryYear === selectedCapYear.split('/')[0]
+        ).length
+      : '—'
+  }
+  subtext={selectedCapYear ? `in ${selectedCapYear}` : undefined}
+  breakdown={
+    selectedCapYear
+      ? [
+          {
+            label: 'FWD',
+            value: forwards.filter(
+              (p) => p.expiryYear === selectedCapYear.split('/')[0]
+            ).length,
+          },
+          {
+            label: 'DEF',
+            value: defense.filter(
+              (p) => p.expiryYear === selectedCapYear.split('/')[0]
+            ).length,
+          },
+          {
+            label: 'G',
+            value: goalies.filter(
+              (p) => p.expiryYear === selectedCapYear.split('/')[0]
+            ).length,
+          },
+        ]
+      : []
+  }
+/>
+
+
       </div>
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="lg:w-3/4 overflow-x-auto">
