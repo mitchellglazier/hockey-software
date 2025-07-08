@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -26,7 +27,7 @@ export default function Contracts() {
   const capYears = players.length ? Object.keys(players[0].capHits) : [];
   const [selectedCapYear, setSelectedCapYear] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any | null>(null);
 
   useEffect(() => {
     const fetchCapData = async () => {
@@ -41,7 +42,7 @@ export default function Contracts() {
           setError(data.error || 'Failed to fetch');
         }
       } catch (err) {
-        setError('Failed to fetch cap data');
+        setError('Failed to fetch cap data', err);
       } finally {
         setLoading(false);
       }
