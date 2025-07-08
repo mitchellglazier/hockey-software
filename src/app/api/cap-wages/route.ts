@@ -82,7 +82,7 @@ export async function GET(req: NextRequest) {
 
         const expiryYear = Object.entries(capHits)
           .reverse()
-          .find(([_, val]) => val)?.[0];
+          .find(([val]) => val)?.[0];
 
         players.push({
           name,

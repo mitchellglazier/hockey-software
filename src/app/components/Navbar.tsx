@@ -32,8 +32,9 @@ export default function Navbar() {
         </Link>
         <div className="flex items-center space-x-4">
           <Link
-            href="https://github.com/mitchellglazier"
+            href="https://github.com/mitchellglazier/hockey-software"
             className="text-white hover:text-blue-600"
+            target='_blank'
           >
             GitHub
           </Link>
