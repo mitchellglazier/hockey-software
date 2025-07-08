@@ -41,7 +41,7 @@ export default function Contracts() {
           setError(data.error || 'Failed to fetch');
         }
       } catch (err) {
-        setError('Failed to fetch cap data', err);
+        setError(`Failed to fetch cap data, ${err}`);
       } finally {
         setLoading(false);
       }
