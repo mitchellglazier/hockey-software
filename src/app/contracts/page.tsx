@@ -239,7 +239,6 @@ export default function Contracts() {
               { key: 'capHit', label: `${latestCapYear}` },
               { key: 'expiryYear', label: 'Expires' },
             ]}
-            selectedCapYear={selectedCapYear}
           />
         </div>
         <div className="lg:w-1/4 flex justify-center">
