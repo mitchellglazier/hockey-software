@@ -88,7 +88,7 @@ export default function CapHitScatter({ data, selectedCapYear, selectedTeam }: C
       .style('pointer-events', 'none');
 
     g.selectAll('circle')
-      .on('mouseover', (_, d) => {
+      .on('mouseover', (_, d: any) => {
         tooltip
           .style('opacity', 1)
           .html(`<strong>${d.name}</strong><br/>Age: ${d.age}<br/>Cap Hit: $${d.capHit.toLocaleString()}`);
