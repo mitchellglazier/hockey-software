@@ -10,11 +10,13 @@ const Sidebar = () => {
 
   if (!selectedTeam) return null;
 
+  const [primary, secondary, tertiary] = selectedTeam.colors;
+
   return (
     <aside
       className="text-white p-4"
       style={{
-        backgroundColor: selectedTeam.colors[1],
+        background: `linear-gradient(to bottom, ${secondary} 25%, ${primary || tertiary} 75%)`,
         width: '220px',
         minHeight: '100vh',
       }}

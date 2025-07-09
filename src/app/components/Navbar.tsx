@@ -7,6 +7,7 @@ import { useTeam } from '../context/TeamContext';
 
 export default function Navbar() {
   const { selectedTeam, setSelectedTeamId } = useTeam();
+    const [primary, secondary, tertiary] = selectedTeam.colors;
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedTeamId(Number(e.target.value));
@@ -15,7 +16,10 @@ export default function Navbar() {
   return (
     <nav
       className="bg-white shadow p-4"
-      style={{ backgroundColor: selectedTeam?.colors[0], height: '72px' }}
+style={{
+  background: `linear-gradient(to right, ${secondary} 25%, ${primary || tertiary} 75%)`,
+  height: '72px'
+}}
     >
       <div className="mx-auto flex items-center justify-between px-4">
         <Link href="/" className="flex items-center space-x-2">

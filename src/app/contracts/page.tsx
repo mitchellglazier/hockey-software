@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useTeam } from '../context/TeamContext';
+import Image from 'next/image';
 import InfoCard from '../components/InfoCard';
 import SortableSearchableTable from '../components/SortableSearchableTable';
 import CapHitDonut from '../components/graphs/CapHitDonut';
@@ -35,6 +36,7 @@ export default function Contracts() {
       if (!selectedTeam) return;
       try {
         setLoading(true);
+        setError(null)
         const res = await fetch(`/api/cap-wages?teamName=${encodeURIComponent(selectedTeam.name)}`);
         const data = await res.json();
         if (res.ok) {
@@ -99,7 +101,21 @@ export default function Contracts() {
     );
   }
 
-  if (error) return <div className="text-red-500">Error: {error}</div>;
+  if (error) return <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
+        {selectedTeam && (
+          <>
+            <Image
+              src={selectedTeam.logo}
+              alt={selectedTeam.name}
+              width={400}
+              height={400}
+              className="mb-4"
+            />
+            <h1 className="text-3xl font-bold text-gray-800">{selectedTeam.name}</h1>
+          </>
+        )}
+        <p className="text-xl text-gray-600">No Data Available</p>
+      </div>;
 
   return (
     <div className="p-4">
