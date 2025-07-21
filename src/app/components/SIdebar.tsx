@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useTeam } from '../context/TeamContext';
 import { FaUsers } from 'react-icons/fa';
 import { FaDollarSign } from 'react-icons/fa';
+import { FaHockeyPuck } from 'react-icons/fa';
 
 const Sidebar = () => {
   const { selectedTeam } = useTeam();
@@ -37,6 +38,14 @@ const Sidebar = () => {
         >
           <FaDollarSign />
           Contracts
+        </Link>
+        <Link
+          href="/rink"
+          className="flex items-center gap-2 px-3 py-2 rounded-md text-md font-semibold hover:bg-white transition-colors duration-200"
+          style={{ color: selectedTeam?.colors[0] }}
+        >
+          <FaHockeyPuck />
+          Rink
         </Link>
 
       </nav>
