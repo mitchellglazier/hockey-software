@@ -3,9 +3,11 @@
 import React, { useEffect, useRef } from 'react';
 import { RINK_MAP } from '../../../../public/d3Rink';
 import * as d3 from 'd3';
+import { useTeam } from '../../context/TeamContext'
 
 const IceRink: React.FC<{ events: any[] }> = ({ events }) => {
   const svgRef = useRef<SVGSVGElement>(null);
+  const { selectedTeam } = useTeam();  
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -29,7 +31,6 @@ const IceRink: React.FC<{ events: any[] }> = ({ events }) => {
     const scale = config.desiredWidth / 85;
     const markerGroup = rinkGroup.append('g').attr('class', 'events');
 
-    // Draw circles
     const markers = markerGroup.selectAll('g.event')
       .data(events)
       .enter()
@@ -38,12 +39,11 @@ const IceRink: React.FC<{ events: any[] }> = ({ events }) => {
       .attr('transform', d => `translate(${d.x * scale}, ${d.y * scale})`);
 
     markers.append('circle')
-      .attr('r', 18)  // Larger circles
+      .attr('r', 18)
       .attr('fill', d => d.type === 'shot' ? 'yellow' : 'green')
       .attr('stroke', 'black')
       .attr('stroke-width', 1);
 
-    // Add initials inside circles
     markers.append('text')
       .text(d => {
         const names = d.player.split(' ');
@@ -56,7 +56,18 @@ const IceRink: React.FC<{ events: any[] }> = ({ events }) => {
       .style('font-size', '18px')
       .style('fill', 'black');
 
-  }, [events]);
+    if (selectedTeam?.logo) {
+      rinkGroup.append('image')
+        .attr('href', selectedTeam.logo)
+        .attr('x', (config.desiredWidth / 2) + 390)
+        .attr('y', (85 / 2 * scale) - 75)         
+        .attr('width', 200)                      
+        .attr('height', 200)
+        .attr('opacity', 0.8);                   
+    }
+
+  }, [events, selectedTeam]);
+
 
 
   return (
